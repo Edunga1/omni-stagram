@@ -15,4 +15,4 @@ RUN npm install
 COPY . .
 
 USER node
-CMD ["node", "server/src"]
+CMD ["npm", "start"]
