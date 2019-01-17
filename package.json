@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "body-parser": "^1.18.3",
-    "express": "^4.16.4",
-    "md5": "^2.2.1",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
