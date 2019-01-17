@@ -1,2 +1,16 @@
 .App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.App .header {
+  font-size: 3em;
+  text-transform: uppercase;
+  padding: 1em 0;
+}
+
+.App .body {
+  max-width: 640px;
+  width: 100%;
 }

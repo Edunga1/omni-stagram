@@ -1,0 +1,14 @@
+.MasonryLayout .list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+}
+
+.MasonryLayout .list > .item {
+  margin: .2em;
+}
+
+.MasonryLayout .list > .item .thumbnail {
+  width: 100%;
+}
