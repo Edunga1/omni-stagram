@@ -1,7 +1,7 @@
 const PrivateInstagramGraphApi = require('../../utils/PrivateInstagramGraphApi');
 
 module.exports = (req, res) => {
-  const { id } = req.params;
+  const { user: id } = req.params;
   const { count = 20 } = req.query;
 
   const api = new PrivateInstagramGraphApi();
