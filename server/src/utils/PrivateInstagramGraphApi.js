@@ -75,15 +75,16 @@ module.exports = class PrivateInstagramGraphApi {
   /**
    * @param {string} id Instagram ID
    * @param {number} count 갯수
+   * @param {string} last last media cursor
    * @return {Promise<MediaResponse>}
    * 더 이상 없다면 빈 배열 반환
    */
-  async nextMedias(id, count = 20) {
+  async nextMedias(id, count = 20, lastMediaId = '') {
     if (!this.$rhxGis || this.$latestId !== id) {
       await this.$fillSharedData(id);
     }
 
-    const result = await this.$getMedias(this.$rhxGis, this.$latestHiddenId, count);
+    const result = await this.$getMedias(this.$rhxGis, this.$latestHiddenId, count, lastMediaId);
     const body = result.data.user.edge_owner_to_timeline_media;
     const { end_cursor: last, has_next_page: hasNext } = body.page_info;
     const medias = body.edges.map(edge => ({
