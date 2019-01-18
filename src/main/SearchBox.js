@@ -8,12 +8,12 @@ const DEFAULT_SEARCH = 'instagram';
 export default class SearchBox extends Component {
   constructor() {
     super();
-    this.onChangeSnsId$ = new Subject();
+    this.onChangeSnsIdSource = new Subject();
   }
 
   componentDidMount() {
     const { onChange } = this.props;
-    this.onChangeSnsId$.pipe(
+    this.onChangeSnsIdSource.pipe(
       startWith(DEFAULT_SEARCH),
     ).subscribe((query) => {
       onChange(query);
@@ -26,7 +26,7 @@ export default class SearchBox extends Component {
         <input
           type="text"
           defaultValue={DEFAULT_SEARCH}
-          onChange={e => this.onChangeSnsId$.next(e.target.value)}
+          onChange={e => this.onChangeSnsIdSource.next(e.target.value)}
         />
       </div>
     );

@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import { Subject } from 'rxjs';
-import { map, switchMap, debounceTime } from 'rxjs/operators';
+import { combineLatest, Subject } from 'rxjs';
+import {
+  debounceTime,
+  filter,
+  map,
+  startWith,
+  tap,
+} from 'rxjs/operators';
 import './Main.css';
-import SearchBox from './SearchBox';
 import MasonryLayout from '../content/MasonryLayout';
 import InstagramRepository from './InstagramRepository';
+import ScrollEndEvent from './ScrollEndEvent';
+import SearchBox from './SearchBox';
 
 class Main extends Component {
   state = {
@@ -13,17 +20,40 @@ class Main extends Component {
 
   constructor() {
     super();
-    this.$repository = new InstagramRepository();
-    this.onSearchBoxChange$ = new Subject();
-    this.onSearchBoxChange$.pipe(
+    this.repository = new InstagramRepository();
+    this.onSearchBoxChangeSource = new Subject();
+
+    const onSearchBoxChange$ = this.onSearchBoxChangeSource.pipe(
       debounceTime(1000),
-      switchMap(query => this.$repository.setInstagramId(query).nextMedias()),
-      map(response => response.medias.map(media => ({
+    );
+    const onScrollEnd$ = new ScrollEndEvent(window).pipe(
+      startWith(null),
+    );
+    let isPending = false;
+
+    combineLatest(
+      onSearchBoxChange$,
+      onScrollEnd$,
+    ).pipe(
+      filter(() => !isPending),
+      tap(() => { isPending = true; }),
+      map(arr => arr[0]),
+      map(query => [
+        this.repository.setInstagramId(query),
+        this.repository.nextMedias(),
+      ]),
+    ).subscribe(async (results) => {
+      const isUpdate = results[0];
+      const newItems = (await results[1]).medias.map(media => ({
         id: media.id,
         src: media.tumbnailSrc,
-      }))),
-    ).subscribe((items) => {
+      }));
+      const { items: oldItems } = this.state;
+      const items = isUpdate
+        ? newItems
+        : oldItems.concat(newItems);
       this.setState({ items });
+      isPending = false;
     });
   }
 
@@ -31,7 +61,7 @@ class Main extends Component {
     const { items } = this.state;
     return (
       <div className="Main">
-        <SearchBox onChange={id => this.onSearchBoxChange$.next(id)} />
+        <SearchBox onChange={id => this.onSearchBoxChangeSource.next(id)} />
         <MasonryLayout items={items} />
       </div>
     );

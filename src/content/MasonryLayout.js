@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Masonry from 'react-masonry-component';
 import './MasonryLayout.css';
+
+const MASONRY_OPTIONS = {
+  transitionDuration: 0,
+};
 
 export default class MasonryLayout extends Component {
   render() {
@@ -12,11 +17,14 @@ export default class MasonryLayout extends Component {
     ));
 
     return (
-      <div className="MasonryLayout">
-        <div className="list">
-          {itemChdilrens}
-        </div>
-      </div>
+      <Masonry
+        className="MasonryLayout"
+        options={MASONRY_OPTIONS}
+        disableImagesLoaded={false}
+        updateOnEachImageLoad={false}
+      >
+        {itemChdilrens}
+      </Masonry>
     );
   }
 }

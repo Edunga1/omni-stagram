@@ -13,6 +13,10 @@ import axios from 'axios';
  * @property {Array<Media>} medias
  */
 
+const DEFAULT_PARAMS = {
+  count: 10,
+};
+
 export default class InstagramRepository {
   constructor(id = '') {
     this.$latestId = id;
@@ -21,21 +25,30 @@ export default class InstagramRepository {
 
   /**
    * @param {string} id Instagram ID
-   * @return {InstagramRepository} this reference
+   * @return {boolean} 업데이트 여부
    */
   setInstagramId(id) {
+    let res = false;
     if (this.$latestId !== id) {
       this.$latestId = id;
       this.$last = '';
+      res = true;
     }
-    return this;
+    return res;
   }
 
   /**
    * @return {Promise<MediaResponse>}
    */
   async nextMedias() {
-    const res = await axios.get(`http://localhost:5000/users/${this.$latestId}/medias`);
+    const params = {
+      ...DEFAULT_PARAMS,
+      last: this.$last,
+    };
+    const res = await axios.get(`http://localhost:5000/users/${this.$latestId}/medias`, {
+      params,
+    });
+    this.$last = res.data.last || '';
     return res.data;
   }
 }

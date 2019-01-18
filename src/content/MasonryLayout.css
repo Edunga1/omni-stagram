@@ -1,14 +1,12 @@
-.MasonryLayout .list {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
+.MasonryLayout {
   margin: 0;
 }
 
-.MasonryLayout .list > .item {
-  margin: .2em;
+.MasonryLayout .item {
+  width: 49%;
+  margin: .5%;
 }
 
-.MasonryLayout .list > .item .thumbnail {
+.MasonryLayout .item .thumbnail {
   width: 100%;
 }
