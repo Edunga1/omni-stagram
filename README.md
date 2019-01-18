@@ -6,6 +6,8 @@ SNS 아이디로 게시물 목록을 보여줍니다.
 
 |script|desc.|
 |---|---|
+|`docker:build`|클라이언트를 빌드하여 도커이미지를 만듭니다. 이미지 태그는 `omni-stagram` 입니다.|
+|`docker:start`|**클라이언트만** 도커로 시작합니다. 바인딩되는 포트는 `3000`입니다.|
 |`docker:server:build`|서버를 빌드하여 도커이미지를 만듭니다. 이미지 태그는 `instagram-proxy-api` 입니다.|
 |`docker:server:start`|**서버만** 도커로 시작합니다. 바인딩되는 포트는 `5000`입니다.|
 

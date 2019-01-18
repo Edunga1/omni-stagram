@@ -17,6 +17,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "docker:up": "docker-compose -f docker-compose.dev.yml up --build -d",
+    "docker:build": "docker build -t omni-stagram .",
+    "docker:start": "docker run --rm -ti -p 3000:80 omni-stagram",
     "docker:server:build": "docker build -t instagram-proxy-api server",
     "docker:server:start": "docker run --rm -ti -p 5000:5000 instagram-proxy-api"
   },
