@@ -36,8 +36,9 @@ class Main extends Component {
       onScrollEnd$,
     ).pipe(
       filter(() => !isPending),
-      tap(() => { isPending = true; }),
       map(arr => arr[0]),
+      filter(query => !!query),
+      tap(() => { isPending = true; }),
       map(query => [
         this.repository.setInstagramId(query),
         this.repository.nextMedias(),
