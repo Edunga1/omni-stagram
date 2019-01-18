@@ -16,7 +16,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "docker:up": "docker-compose -f docker-compose.dev.yml up --build -d"
+    "docker:up": "docker-compose -f docker-compose.dev.yml up --build -d",
+    "docker:server:build": "docker build -t instagram-proxy-api server",
+    "docker:server:start": "docker run --rm -ti -p 5000:5000 instagram-proxy-api"
   },
   "eslintConfig": {
     "extends": "react-app"
