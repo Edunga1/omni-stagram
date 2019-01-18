@@ -45,7 +45,7 @@ class Main extends Component {
       ]),
     ).subscribe(async (results) => {
       const isUpdate = results[0];
-      const newItems = (await results[1]).medias.map(media => ({
+      const newItems = (await results[1]).map(media => ({
         id: media.id,
         src: media.tumbnailSrc,
       }));

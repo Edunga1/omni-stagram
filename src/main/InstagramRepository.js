@@ -6,12 +6,6 @@ import axios from 'axios';
  * @property {number} timestamp
  * @property {string} tumbnailSrc
  */
-/**
- * @typedef MediaResponse
- * @property {string} last
- * @property {boolean} hasNext
- * @property {Array<Media>} medias
- */
 
 const DEFAULT_PARAMS = {
   count: 10,
@@ -38,17 +32,24 @@ export default class InstagramRepository {
   }
 
   /**
-   * @return {Promise<MediaResponse>}
+   * @return {Promise<Array<Media>>}
+   * 결과가 없으면 빈 배열 반환
    */
   async nextMedias() {
+    let medias = [];
     const params = {
       ...DEFAULT_PARAMS,
       last: this.$last,
     };
-    const res = await axios.get(`http://localhost:5000/users/${this.$latestId}/medias`, {
-      params,
-    });
-    this.$last = res.data.last || '';
-    return res.data;
+    const res = await axios.get(
+      `http://localhost:5000/users/${this.$latestId}/medias`, { params },
+    ).catch(() => null);
+
+    if (res) {
+      this.$last = res.data.last;
+      medias = medias.concat(res.data.medias);
+    }
+
+    return medias;
   }
 }
