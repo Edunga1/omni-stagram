@@ -8,5 +8,7 @@ module.exports = (req, res) => {
   api.nextMedias(id, count, last).then((result) => {
     if (result) res.status(200).json(result);
     else res.status(400).end();
+  }).catch(() => {
+    res.status(404).end();
   });
 };
