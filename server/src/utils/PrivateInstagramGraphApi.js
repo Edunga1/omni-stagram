@@ -90,7 +90,7 @@ module.exports = class PrivateInstagramGraphApi {
     const medias = body.edges.map(edge => ({
       id: edge.node.id,
       timestamp: edge.node.taken_at_timestamp,
-      tumbnailSrc: edge.node.thumbnail_src,
+      tumbnailSrc: edge.node.display_url,
     }));
 
     return {
