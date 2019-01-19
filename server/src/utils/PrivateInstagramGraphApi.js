@@ -85,7 +85,7 @@ module.exports = class PrivateInstagramGraphApi {
     const body = result.data.user.edge_owner_to_timeline_media;
     const { end_cursor: last, has_next_page: hasNext } = body.page_info;
     const medias = body.edges.map(edge => ({
-      id: edge.node.id,
+      id: edge.node.shortcode,
       timestamp: edge.node.taken_at_timestamp,
       tumbnailSrc: edge.node.display_url,
     }));
