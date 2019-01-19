@@ -8,7 +8,7 @@ import axios from 'axios';
  */
 
 const DEFAULT_PARAMS = {
-  count: 10,
+  count: 20,
 };
 
 export default class InstagramRepository {
