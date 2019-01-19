@@ -1,14 +1,10 @@
-const axios = require('axios');
+const axios = require('axios').default;
 const md5 = require('md5');
 
 const URL_INSTAGRAM_BASE = 'https://www.instagram.com/';
 const PATH_INSTAGRAM_GRAPHQL = '/graphql/query';
 const REGEX_SHARED_DATA = /window._sharedData\s=\s(.*?);<\/script>/;
-const PARAM_QUERY_HASH = '42323d64886122307be10013ad2dcc44';
-const VARIABLES_BASE = {
-  include_reel: true,
-  fetch_mutual: false,
-};
+const QHASH_MEDIAS = '42323d64886122307be10013ad2dcc44';
 
 module.exports = class PrivateInstagramGraphApi {
   constructor() {
@@ -16,57 +12,48 @@ module.exports = class PrivateInstagramGraphApi {
       baseURL: URL_INSTAGRAM_BASE,
     });
     this.$rhxGis = '';
-    this.$latestId = '';
-    this.$latestHiddenId = '';
-    this.$after = '';
+    this.$hiddenId = '';
   }
 
   /**
-   * User Agent로 rhx gis 값을 얻음
-   * @param {string} id Instagram ID
-   * @return {Promise<SharedData>}
-   */
-  async $getSharedData(id) {
-    const result = (await this.$axiosInstance.get(`/${id}/`)).data;
-    return JSON.parse(result.match(REGEX_SHARED_DATA)[1]);
-  }
-
-  /**
+   * Instagram Graph API를 사용하기 위한 사전 데이터를 준비함
    * @param {string} id Instagram ID
    * @return {Promise<void>}
    */
-  async $fillSharedData(id) {
-    const sharedData = await this.$getSharedData(id);
-    this.$latestId = id;
-    this.$latestHiddenId = sharedData.entry_data.ProfilePage[0].graphql.user.id;
-    this.$rhxGis = sharedData.rhx_gis;
+  async $fetchData(id) {
+    if (this.$hidden !== id) {
+      const result = (await this.$axiosInstance.get(`/${id}/`)).data;
+      const sharedData = JSON.parse(result.match(REGEX_SHARED_DATA)[1]);
+      this.$rhxGis = sharedData.rhx_gis;
+      this.$hiddenId = sharedData.entry_data.ProfilePage[0].graphql.user.id;
+    }
   }
 
   /**
-   * Instagram GraphQL로 부터 미디어 목록을 얻음
-   * @param {string} rhxGis
-   * @param {string} hiddenId Instagram Hidden ID
-   * @param {number} count 갯수
-   * @param {string} lastMediaId 마지막 미디어 ID
+   * Instagram Graph API 요청
+   * @param {string} queryHash graph query hash
+   * @param {string} hiddenId user hidden id
+   * @param {any} params parameters as object
+   * @return {Promise<any>}
    */
-  async $getMedias(rhxGis, hiddenId, count, lastMediaId = '') {
+  async $request(queryHash, hiddenId, params) {
+    await this.$fetchData(hiddenId);
+
     const variablesEncoded = JSON.stringify({
-      ...VARIABLES_BASE,
-      id: hiddenId,
-      first: count,
-      after: lastMediaId,
+      id: this.$hiddenId,
+      ...params,
     });
-    const params = {
-      query_hash: PARAM_QUERY_HASH,
+    const axiosParams = {
+      query_hash: queryHash,
       variables: variablesEncoded,
     };
-    const xInstagramGis = md5(`${rhxGis}:${variablesEncoded}`);
+    const xInstagramGis = md5(`${this.$rhxGis}:${variablesEncoded}`);
     const headers = {
       'X-Instagram-GIS': xInstagramGis,
     };
     const result = (await this.$axiosInstance.get(
       PATH_INSTAGRAM_GRAPHQL, {
-        headers, params,
+        headers, params: axiosParams,
       },
     )).data;
     return result;
@@ -75,16 +62,19 @@ module.exports = class PrivateInstagramGraphApi {
   /**
    * @param {string} id Instagram ID
    * @param {number} count 갯수
-   * @param {string} last last media cursor
+   * @param {string} cursor last media cursor
    * @return {Promise<MediaResponse>}
    * 더 이상 없다면 빈 배열 반환
    */
-  async nextMedias(id, count = 20, lastMediaId = '') {
-    if (!this.$rhxGis || this.$latestId !== id) {
-      await this.$fillSharedData(id);
-    }
-
-    const result = await this.$getMedias(this.$rhxGis, this.$latestHiddenId, count, lastMediaId);
+  async nextMedias(id, count = 20, cursor = '') {
+    const result = await this.$request(
+      QHASH_MEDIAS,
+      id,
+      {
+        first: count,
+        after: cursor,
+      },
+    );
     const body = result.data.user.edge_owner_to_timeline_media;
     const { end_cursor: last, has_next_page: hasNext } = body.page_info;
     const medias = body.edges.map(edge => ({
