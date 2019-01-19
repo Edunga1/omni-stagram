@@ -5,6 +5,13 @@ const URL_INSTAGRAM_BASE = 'https://www.instagram.com/';
 const PATH_INSTAGRAM_GRAPHQL = '/graphql/query';
 const REGEX_SHARED_DATA = /window._sharedData\s=\s(.*?);<\/script>/;
 const QHASH_MEDIAS = '42323d64886122307be10013ad2dcc44';
+const QHASH_MEDIA_DETAIL = '2cc8bfb89429345060d1212147913582';
+const PARAM_BASE_MEDIA_DETAIL = {
+  child_comment_count: 3,
+  fetch_comment_count: 40,
+  parent_comment_count: 24,
+  has_threaded_comments: false,
+};
 
 module.exports = class PrivateInstagramGraphApi {
   constructor() {
@@ -87,6 +94,37 @@ module.exports = class PrivateInstagramGraphApi {
       last,
       hasNext,
       medias,
+    };
+  }
+
+  /**
+   * @param {string} id Instagram ID
+   * @param {string} mediaId Instagram Media ID
+   * @return {Promise<MediaInfo>}
+   */
+  async mediaInfo(id, mediaId) {
+    const result = await this.$request(
+      QHASH_MEDIA_DETAIL,
+      id,
+      {
+        shortcode: mediaId,
+        ...PARAM_BASE_MEDIA_DETAIL,
+      },
+    );
+    const body = result.data.shortcode_media;
+    const mediaSrc = body.display_url;
+    const { text } = body.edge_media_to_caption.edges[0].node;
+    const comments = body.edge_media_to_comment.edges.map(item => ({
+      userId: item.node.owner.username,
+      userProfileSrc: item.node.owner.profile_pic_url,
+      timestamp: item.node.created_at,
+      text: item.node.text,
+    }));
+
+    return {
+      mediaSrc,
+      text,
+      comments,
     };
   }
 };
