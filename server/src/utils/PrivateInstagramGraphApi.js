@@ -114,6 +114,11 @@ module.exports = class PrivateInstagramGraphApi {
     const body = result.data.shortcode_media;
     const mediaSrc = body.display_url;
     const { text } = body.edge_media_to_caption.edges[0].node;
+    const timestamp = body.taken_at_timestamp;
+    const {
+      username: userId,
+      profile_pic_url: userProfileSrc,
+    } = body.owner;
     const comments = body.edge_media_to_comment.edges.map(item => ({
       userId: item.node.owner.username,
       userProfileSrc: item.node.owner.profile_pic_url,
@@ -124,6 +129,9 @@ module.exports = class PrivateInstagramGraphApi {
     return {
       mediaSrc,
       text,
+      timestamp,
+      userId,
+      userProfileSrc,
       comments,
     };
   }

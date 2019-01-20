@@ -52,3 +52,57 @@ interface MediaResponse {
    */
   medias: Array<Media>;
 }
+
+interface Comment {
+  /**
+   * 덧글 작성자 ID
+   */
+  userId: string;
+
+  /**
+   * 덧글 작성자 프로필 사진 주소
+   */
+  userProfileSrc: string;
+
+  /**
+   * 덧글 작성 시간 timestamp (초)
+   */
+  timestamp: number;
+
+  /**
+   * 덧글 내용
+   */
+  text: string;
+}
+
+interface MediaInfo {
+  /**
+   * 사진 주소
+   */
+  mediaSrc: string;
+
+  /**
+   * 본문
+   */
+  text: string;
+
+  /**
+   * 작성 시간 timestamp (초)
+   */
+  timestamp: number;
+
+  /**
+   * 작성자 ID
+   */
+  userId: string;
+
+  /**
+   * 작성자 프로필 사진 주소
+   */
+  userProfileSrc: string;
+
+  /**
+   * 덧글 목록
+   */
+  comments: Array<Comment>
+}
