@@ -9,7 +9,7 @@ import {
 } from 'rxjs/operators';
 import './Main.css';
 import MasonryLayout from '../content/MasonryLayout';
-import InstagramRepository from './InstagramRepository';
+import InstagramRepository from '../services/InstagramRepository';
 import ScrollEndEvent from './ScrollEndEvent';
 import SearchBox from './SearchBox';
 
