@@ -9,6 +9,9 @@ export default class MediaInfo extends Component {
   state = {
     isDone: false,
     text: '',
+    timestamp: 0,
+    userId: '',
+    userProfileSrc: '',
     mediaSrc: '',
     comments: [],
   }
@@ -25,6 +28,9 @@ export default class MediaInfo extends Component {
       this.setState({
         isDone: true,
         text: detail.text,
+        timestamp: detail.timestamp,
+        userId: detail.userId,
+        userProfileSrc: detail.userProfileSrc,
         mediaSrc: detail.mediaSrc,
         comments: detail.comments,
       });
@@ -35,6 +41,9 @@ export default class MediaInfo extends Component {
     const {
       isDone,
       text,
+      timestamp,
+      userId,
+      userProfileSrc,
       mediaSrc,
       comments,
     } = this.state;
@@ -45,6 +54,9 @@ export default class MediaInfo extends Component {
             ? (
               <Detail
                 text={text}
+                timestamp={timestamp}
+                userId={userId}
+                userProfileSrc={userProfileSrc}
                 mediaSrc={mediaSrc}
                 comments={comments.sort((a, b) => b.timestamp - a.timestamp)}
               />

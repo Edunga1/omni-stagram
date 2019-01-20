@@ -5,7 +5,14 @@ import Comment from './Comment';
 
 export default class Detail extends Component {
   render() {
-    const { text, mediaSrc, comments } = this.props;
+    const {
+      text,
+      timestamp,
+      userId,
+      userProfileSrc,
+      mediaSrc,
+      comments,
+    } = this.props;
     const elmComments = comments.map((c, i) => (
       <Comment
         key={i.toString()}
@@ -19,7 +26,12 @@ export default class Detail extends Component {
       <div className="Detail">
         <div className="body">
           <img className="img-main" src={mediaSrc} alt="media" />
-          <div className="txt">{text}</div>
+          <Comment
+            text={text}
+            timestamp={timestamp}
+            userId={userId}
+            userProfileSrc={userProfileSrc}
+          />
           <div className="box-comments">
             {elmComments}
           </div>
@@ -32,6 +44,9 @@ export default class Detail extends Component {
 Detail.propTypes = {
   text: PropTypes.string.isRequired,
   mediaSrc: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
+  userId: PropTypes.string.isRequired,
+  userProfileSrc: PropTypes.string.isRequired,
   comments: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string.isRequired,

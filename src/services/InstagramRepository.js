@@ -17,6 +17,9 @@ import axios from 'axios';
  * @typedef Detail
  * @property {string} mediaSrc
  * @property {string} text
+ * @property {number} timestamp
+ * @property {string} userId
+ * @property {string} userProfileSrc
  * @property {Array<Comment>} comments
  */
 
