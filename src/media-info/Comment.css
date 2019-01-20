@@ -1,0 +1,21 @@
+.Comment .img-profile {
+  margin-right: .2em;
+  width: 1em;
+  vertical-align: middle;
+}
+
+.Comment .txt-username {
+  font-size: .8em;
+  font-weight: bold;
+  margin-right: .5em;
+}
+
+.Comment .txt-comment {
+  font-size: .8em;
+  margin-right: .3em;
+}
+
+.Comment .txt-time {
+  font-size: .6em;
+  color: rgb(100, 100, 100);
+}

@@ -1,0 +1,29 @@
+.Detail {
+  display: flex;
+  justify-content: center;
+  padding: 2em 0;
+}
+
+.Detail .body {
+  max-width: 640px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Detail .body .img-main {
+  width: 65%;
+  margin-bottom: 2em;
+}
+
+.Detail .body .txt {
+  font-size: .8em;
+}
+
+.Detail .body .box-comments {
+  margin-top: 1em;
+}
+
+.Detail .body .box-comments .Comment {
+  margin-bottom: .1em;
+}
