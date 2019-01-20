@@ -22,6 +22,7 @@
 
 .Detail .body .box-comments {
   margin-top: 1em;
+  width: 100%;
 }
 
 .Detail .body .box-comments .Comment {

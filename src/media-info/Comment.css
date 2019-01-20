@@ -1,3 +1,7 @@
+.Comment {
+  word-wrap: break-word;
+}
+
 .Comment .img-profile {
   margin-right: .2em;
   width: 1em;
