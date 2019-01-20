@@ -6,6 +6,19 @@ import axios from 'axios';
  * @property {number} timestamp
  * @property {string} tumbnailSrc
  */
+/**
+ * @typedef Comment
+ * @property {string} text
+ * @property {number} timestamp
+ * @property {string} userId
+ * @property {string} userProfileSrc
+ */
+/**
+ * @typedef Detail
+ * @property {string} mediaSrc
+ * @property {string} text
+ * @property {Array<Comment>} comments
+ */
 
 const DEFAULT_PARAMS = {
   count: 20,
@@ -51,5 +64,18 @@ export default class InstagramRepository {
     }
 
     return medias;
+  }
+
+  /**
+   * @param {string} media media id
+   * @return {Promise<Detail>}
+   */
+  async detail(media) {
+    const res = await axios.get(
+      `http://localhost:5000/users/${this.$latestId}/medias/${media}`,
+    ).then(response => (
+      response.data
+    )).catch(() => null);
+    return res;
   }
 }
