@@ -9,10 +9,12 @@ const MASONRY_OPTIONS = {
 
 export default class MasonryLayout extends Component {
   render() {
-    const { items } = this.props;
+    const { userId, items } = this.props;
     const itemChdilrens = items.map(item => (
       <div className="item" key={item.id}>
-        <img className="thumbnail" src={item.src} alt="item-thumbnail" />
+        <a href={!userId ? '#' : `./${userId}/${item.id}`}>
+          <img className="thumbnail" src={item.src} alt="thumbnail" />
+        </a>
       </div>
     ));
 
@@ -30,6 +32,7 @@ export default class MasonryLayout extends Component {
 }
 
 MasonryLayout.propTypes = {
+  userId: PropTypes.string,
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     src: PropTypes.string,
@@ -37,6 +40,7 @@ MasonryLayout.propTypes = {
 };
 
 MasonryLayout.defaultProps = {
+  userId: '',
   items: [
     { id: '1', src: 'https://i.imgur.com/c3s8eqU.jpg' },
     { id: '2', src: 'https://i.imgur.com/IgB7tpM.jpg' },

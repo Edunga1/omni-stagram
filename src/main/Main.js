@@ -42,6 +42,7 @@ class Main extends Component {
       map(query => [
         this.repository.setInstagramId(query),
         this.repository.nextMedias(),
+        query,
       ]),
     ).subscribe(async (results) => {
       const isUpdate = results[0];
@@ -49,21 +50,22 @@ class Main extends Component {
         id: media.id,
         src: media.tumbnailSrc,
       }));
+      const userId = results[2];
       const { items: oldItems } = this.state;
       const items = isUpdate
         ? newItems
         : oldItems.concat(newItems);
-      this.setState({ items });
+      this.setState({ userId, items });
       isPending = false;
     });
   }
 
   render() {
-    const { items } = this.state;
+    const { userId, items } = this.state;
     return (
       <div className="Main">
         <SearchBox onChange={id => this.onSearchBoxChangeSource.next(id)} />
-        <MasonryLayout items={items} />
+        <MasonryLayout userId={userId} items={items} />
       </div>
     );
   }
