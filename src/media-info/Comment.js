@@ -1,47 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './Comment.css';
 import { interval } from 'rxjs';
-
-const MS_SECOND = 1000;
-const MS_MINUTE = 60000;
-const MS_HOUR = 3600000;
-const MS_DAY = 86400000;
-const MS_SECONDS_CL = 60000;
-const MS_MINUTES_CL = 3600000;
-const MS_HOURS_CL = 86400000;
-const MS_DAYS_CL = 2592000000;
+import './Comment.css';
+import SnsTimeFormatter from '../services/SnsTimeFormatter';
 
 export default class Comment extends Component {
   state ={
     commentCreatedAt: '',
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.formatter = new SnsTimeFormatter(new Date(props.timestamp * 1000));
     this.interval$ = interval(1000);
   }
 
   componentDidMount() {
-    const { timestamp } = this.props;
     this.interval$.subscribe(() => {
       const now = new Date();
-      const time = new Date(timestamp * 1000);
-      const diff = now - time;
-      let commentCreatedAt = '';
-
-      if (diff < MS_SECONDS_CL) {
-        commentCreatedAt = `${Math.floor(diff / MS_SECOND)}초 전`;
-      } else if (diff < MS_MINUTES_CL) {
-        commentCreatedAt = `${Math.floor(diff / MS_MINUTE)}분 전`;
-      } else if (diff < MS_HOURS_CL) {
-        commentCreatedAt = `${Math.floor(diff / MS_HOUR)}시간 전`;
-      } else if (diff < MS_DAYS_CL) {
-        commentCreatedAt = `${Math.floor(diff / MS_DAY)}일 전`;
-      } else {
-        commentCreatedAt = `${time.getMonth() + 1}/${time.getDate()}`;
-      }
-
+      const commentCreatedAt = this.formatter.parseBy(now);
       this.setState({ commentCreatedAt });
     });
   }
