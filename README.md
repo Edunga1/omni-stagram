@@ -30,6 +30,8 @@ SNS 아이디로 게시물 목록을 보여줍니다.
 `docker:up`으로 시작하는 것을 추천합니다.
 개발 모드로 시작하면 소스코드 수정 시 따로 재시작 할 필요없이 적용됩니다.
 
+`docker:up` 하기 전에 의존 모듈이 설치되어야 합니다. 프로젝트 루트에서 `npm install`, server 폴더 내에서 `npm install` 해 주세요.
+
 끝내려면 `docker:down`로 중지합니다.
 
 ## production
