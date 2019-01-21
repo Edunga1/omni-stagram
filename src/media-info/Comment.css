@@ -8,7 +8,12 @@
   vertical-align: middle;
 }
 
-.Comment .txt-username {
+.Comment .link-user {
+  text-decoration: none;
+  color: #000;
+}
+
+.Comment .link-user .txt-username {
   font-size: .8em;
   font-weight: bold;
   margin-right: .5em;

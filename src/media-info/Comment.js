@@ -29,7 +29,9 @@ export default class Comment extends Component {
     return (
       <div className="Comment">
         <img className="img-profile" src={userProfileSrc} alt="profile" />
-        <span className="txt-username">{userId}</span>
+        <a className="link-user" href={`/?q=${userId}`}>
+          <span className="txt-username">{userId}</span>
+        </a>
         <span className="txt-comment">{text}</span>
         <span className="txt-time">{commentCreatedAt}</span>
       </div>
