@@ -1,13 +1,13 @@
 {
-  "main.css": "/d-day-online/static/css/main.9cb2c72d.chunk.css",
-  "main.js": "/d-day-online/static/js/main.ab5cbf46.chunk.js",
-  "main.js.map": "/d-day-online/static/js/main.ab5cbf46.chunk.js.map",
-  "static/js/1.80e36f38.chunk.js": "/d-day-online/static/js/1.80e36f38.chunk.js",
-  "static/js/1.80e36f38.chunk.js.map": "/d-day-online/static/js/1.80e36f38.chunk.js.map",
-  "runtime~main.js": "/d-day-online/static/js/runtime~main.ab983c45.js",
-  "runtime~main.js.map": "/d-day-online/static/js/runtime~main.ab983c45.js.map",
-  "static/css/main.9cb2c72d.chunk.css.map": "/d-day-online/static/css/main.9cb2c72d.chunk.css.map",
-  "index.html": "/d-day-online/index.html",
-  "precache-manifest.2d3881f33a90cf5d09b494fa0d544122.js": "/d-day-online/precache-manifest.2d3881f33a90cf5d09b494fa0d544122.js",
-  "service-worker.js": "/d-day-online/service-worker.js"
+  "main.css": "/omni-stagram/static/css/main.9cb2c72d.chunk.css",
+  "main.js": "/omni-stagram/static/js/main.78b65093.chunk.js",
+  "main.js.map": "/omni-stagram/static/js/main.78b65093.chunk.js.map",
+  "static/js/1.80e36f38.chunk.js": "/omni-stagram/static/js/1.80e36f38.chunk.js",
+  "static/js/1.80e36f38.chunk.js.map": "/omni-stagram/static/js/1.80e36f38.chunk.js.map",
+  "runtime~main.js": "/omni-stagram/static/js/runtime~main.a9b60a7d.js",
+  "runtime~main.js.map": "/omni-stagram/static/js/runtime~main.a9b60a7d.js.map",
+  "static/css/main.9cb2c72d.chunk.css.map": "/omni-stagram/static/css/main.9cb2c72d.chunk.css.map",
+  "index.html": "/omni-stagram/index.html",
+  "precache-manifest.c0d21238e803a35a312095dbe56ef092.js": "/omni-stagram/precache-manifest.c0d21238e803a35a312095dbe56ef092.js",
+  "service-worker.js": "/omni-stagram/service-worker.js"
 }
